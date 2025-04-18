@@ -9,11 +9,11 @@ import "dotenv/config"
 import connectDB from './connectdb.js'
 
 
-const app = express()
+const server = express()
 
 // Middleware
-app.use(express.json())
-app.use(cors())
+server.use(express.json())
+server.use(cors())
 
 //Definizione modello dato del DB
 const userSchema = new mongoose.Schema({
@@ -30,13 +30,13 @@ const userModel = mongoose.model('Users', userSchema)
 //CRUD
 
 //GET All
-app.get('/authors', async (req, res) =>{ 
+server.get('/authors', async (req, res) =>{ 
     const users = await userModel.find()
     res.status(200).json(users)
 })
 
 //GET Authors Id
-app.get('/users/:id', async (req, res)=>{ //per leggere dimanicamente il singolo id, lo metto come segnaposto :id
+server.get('/users/:id', async (req, res)=>{ //per leggere dimanicamente il singolo id, lo metto come segnaposto :id
     const id = req.params.id  // definisco una variabile id che è dato dalla richiesta di leggere l'id presente nei parametri dell'oggetto.
     try{
         const user = await userModel.findById(id) // cercami un oggetto che ha come Id => id
@@ -48,7 +48,7 @@ app.get('/users/:id', async (req, res)=>{ //per leggere dimanicamente il singolo
 
 
 //POST
-app.post('/authors', async (req, res)=>{
+server.post('/authors', async (req, res)=>{
     const obj = req.body  // definisco un oggetto che è il body che richiedo al DB
     const user = new userModel(obj) // dico che lo user è l'oggetto con modello useModel
     const dbUser = await user.save() // salvo quello che ho creato nel mio database
@@ -56,7 +56,7 @@ app.post('/authors', async (req, res)=>{
 })
 
 //PUT
-app.put('/users/:id', async (req, res)=>{
+server.put('/authors/:id', async (req, res)=>{
     const id = req.params.id
     const obj = req.body
     try{
@@ -68,7 +68,7 @@ app.put('/users/:id', async (req, res)=>{
 })
 
 //DELETE
-app.delete('users/:id', async(req, res)=>{
+server.delete('authors/:id', async(req, res)=>{
     const id = req.params.id
     try{
         await userModel.findByIdAndDelete(id)
@@ -79,7 +79,7 @@ app.delete('users/:id', async(req, res)=>{
 })
 
 
-app.listen(process.env.PORT, () => {  // .listen è il metodo che accende il server su una porta.
+server.listen(process.env.PORT, () => {  // .listen è il metodo che accende il server su una porta.
 console.log(`Node app listening on port ${process.env.PORT}`) })
 
 connectDB()
