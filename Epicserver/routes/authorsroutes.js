@@ -1,25 +1,5 @@
-// const express = require('express')
-// const cors = require('cors') 
-// const mongoose = require('mongoose')
+import authorSchema from "../models/authorschema"
 
-import express from 'express'
-import cors from 'cors'
-//import mongoose from 'mongoose'
-import "dotenv/config"
-import connectDB from './connectdb.js'
-import authorSchema from './models/authorschema.js'
-import blogPostSchema from './models/blogpostschema.js'
-// import blogPostRoutes from './routes/authorsroutes.js'
-// import authorsRoutes from './routes/authorsroutes.js'
-
-const server = express()
-
-// Middleware
-server.use(express.json())
-server.use(cors())
-
-
-//CRUD Autori
 
 //GET All
 server.get('/authors', async (req, res) => {
@@ -70,14 +50,4 @@ server.delete('authors/:id', async (req, res) => {
     }
 })
 
-
-
-
-
-server.listen(process.env.PORT, () => {  // .listen è il metodo che accende il server su una porta.
-    console.log(`Node app listening on port ${process.env.PORT}`)
-})
-
-connectDB()
-
-
+export default authorsRoutes
