@@ -10,7 +10,6 @@ import connectDB from './connectdb.js'
 
 
 const app = express()
-const dbName = 'EpicCrud'
 
 // Middleware
 app.use(express.json())
@@ -20,8 +19,10 @@ app.use(cors())
 const userSchema = new mongoose.Schema({
     name: {type: 'string', required: true},
     lastname: {type: 'string', required: true},
-    phone: {type: 'number', required: true},
-    email: {type: 'string', required: true}
+    email: {type: 'string', required: true},
+    avatar: {type: 'string', required: true},
+    birthday: {type: 'string', required: true}
+    
 })  // così definisco che forma deve avere il dato.
 
 const userModel = mongoose.model('Users', userSchema)
@@ -29,7 +30,7 @@ const userModel = mongoose.model('Users', userSchema)
 //CRUD
 
 //GET All
-app.get('/users', async (req, res) =>{ 
+app.get('/authors', async (req, res) =>{ 
     const users = await userModel.find()
     res.status(200).json(users)
 })
@@ -40,6 +41,38 @@ app.get('/users/:id', async (req, res)=>{ //per leggere dimanicamente il singolo
     try{
         const user = await userModel.findById(id) // cercami un oggetto che ha come Id => id
         res.status(200).json(user)
+    }catch (err) {
+        res.status(500).json({error: err.message})
+    }
+})
+
+
+//POST
+app.post('/authors', async (req, res)=>{
+    const obj = req.body  // definisco un oggetto che è il body che richiedo al DB
+    const user = new userModel(obj) // dico che lo user è l'oggetto con modello useModel
+    const dbUser = await user.save() // salvo quello che ho creato nel mio database
+    res.status(201).json(dbUser)
+})
+
+//PUT
+app.put('/users/:id', async (req, res)=>{
+    const id = req.params.id
+    const obj = req.body
+    try{
+        const userUpdate = await userModel.findByIdAndUpdate(id, obj)
+        res.status(200).json(userUpdate)
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+})
+
+//DELETE
+app.delete('users/:id', async(req, res)=>{
+    const id = req.params.id
+    try{
+        await userModel.findByIdAndDelete(id)
+        res.status(200).json(message = 'utente cancellato')
     }catch (err) {
         res.status(500).json({error: err.message})
     }
