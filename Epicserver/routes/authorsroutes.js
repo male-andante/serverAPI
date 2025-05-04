@@ -1,4 +1,4 @@
-import authorSchema from "../models/authorschema"
+import {authorSchema, authorModel} from "../models/authorschema"
 
 
 //GET All

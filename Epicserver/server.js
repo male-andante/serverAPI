@@ -7,10 +7,11 @@ import cors from 'cors'
 //import mongoose from 'mongoose'
 import "dotenv/config"
 import connectDB from './connectdb.js'
-import authorSchema from './models/authorschema.js'
-import blogPostSchema from './models/blogpostschema.js'
+import {authorSchema, authorModel} from './models/authorschema.js'
+import {blogPostSchema, blogPostModel} from './models/blogpostschema.js'
 // import blogPostRoutes from './routes/authorsroutes.js'
 // import authorsRoutes from './routes/authorsroutes.js'
+import multer from 'multer'
 
 const server = express()
 

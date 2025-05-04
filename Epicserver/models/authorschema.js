@@ -12,4 +12,4 @@ const authorSchema = new mongoose.Schema({
 
 const authorModel = mongoose.model('Authors', authorSchema)
 
-export default authorSchema
+export default {authorSchema, authorModel}

@@ -1,4 +1,4 @@
-import blogPostSchema from "../models/blogpostschema"
+import {blogPostSchema, blogPostModel} from "../models/blogpostschema"
 
 
 //CRUD posts
@@ -24,7 +24,7 @@ server.get('/blogPosts/:id', async (req, res) => { //per leggere dimanicamente i
 //POST
 server.post('/blogPosts', async (req, res) => {
     const obj = req.body  // definisco un oggetto che è il body che richiedo al DB
-    const blogPost = new authorModel(obj) // dico che lo user è l'oggetto con modello useModel
+    const blogPost = new blogPostModel(obj) // dico che lo user è l'oggetto con modello useModel
     const dbPost = await blogPost.save() // salvo quello che ho creato nel mio database
     res.status(201).json(dbPost)
 })

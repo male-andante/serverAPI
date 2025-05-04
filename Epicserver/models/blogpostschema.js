@@ -17,4 +17,4 @@ const blogPostSchema = new mongoose.Schema(
 
 const blogPostModel = mongoose.model('blogPost', blogPostSchema)
 
-export default blogPostSchema
+export default {blogPostSchema, blogPostModel}
